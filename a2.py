@@ -28,7 +28,7 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
 
         # 1) if we reached the end of the pattern but not source
         if pind == len(pattern) and sind < len(source):
-            print("end of pattern, but not source")
+
             return None
 
         # 2) if the current thing in the pattern is a %
@@ -42,24 +42,32 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
                 return result
             
             else:
-                pass
+                pind += 1
+                accum = ""
+                while pattern[pind] != source[sind]:
+                    accum += source[sind] + " "
+                    sind += 1
+
+                    if sind == len(source):
+                        return None
+                
+                result.append(accum.strip())
 
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source):
-            print("end of source, but not pattern")
+
             return None
 
         # 4) if the current thing in the pattern is an _
         elif pattern[pind] == "_":
-            result.append
-            print(result)
+            result.append(source[sind])
             pind += 1
             sind += 1
 
         # 5) if the current thing in the pattern is the same as the current thing in the
         # source
         elif pattern[pind] == source[sind]:
-            print(pattern[pind], source[sind])
+
             pind += 1
             sind += 1
 
@@ -67,11 +75,10 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # indicates the current thing it pattern doesn't match the current thing in
         # source
         else:
-            print(pattern[pind] + " " + source[sind])
-            print("End of assert, return none")
+
             return None
 
-    print("end of assert, return the list")
+
     return result
 
 
